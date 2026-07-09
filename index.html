@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>❤️ A Little Question ❤️</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ============================= -->
+    <!-- Floating Hearts -->
+    <!-- ============================= -->
+
+    <div id="heartContainer"></div>
+
+    <!-- ============================= -->
+    <!-- Falling Rose Petals -->
+    <!-- ============================= -->
+
+    <div id="petalContainer"></div>
+
+    <!-- ============================= -->
+    <!-- Sparkles -->
+    <!-- ============================= -->
+
+    <div id="sparkleContainer"></div>
+
+    <!-- ============================= -->
+    <!-- Background Glow -->
+    <!-- ============================= -->
+
+    <div class="backgroundGlow glow1"></div>
+    <div class="backgroundGlow glow2"></div>
+    <div class="backgroundGlow glow3"></div>
+
+    <!-- ============================= -->
+    <!-- Main Card -->
+    <!-- ============================= -->
+
+    <main class="card">
+
+        <!-- ============================= -->
+        <!-- Header -->
+        <!-- ============================= -->
+
+        <header>
+
+            <h1>
+                ❤️ Wil je mijn vriendin zijn? ❤️
+            </h1>
+
+            <p class="subtitle">
+                Ik heb iets belangrijks om te vragen...
+            </p>
+
+        </header>
+
+        <!-- ============================= -->
+        <!-- Love Meter -->
+        <!-- ============================= -->
+
+        <section class="meterSection">
+
+            <div class="meterHeader">
+
+                <span>
+                    ❤️ Love Meter
+                </span>
+
+                <span id="lovePercent">
+                    0%
+                </span>
+
+            </div>
+
+            <div class="meterOuter">
+
+                <div id="meterFill"></div>
+
+            </div>
+
+            <p id="meterText">
+                De liefde groeit...
+            </p>
+
+        </section>
+
+        <!-- ============================= -->
+        <!-- Cute Image -->
+        <!-- ============================= -->
+
+        <section class="imageSection">
+
+            <img
+                id="cuteImage"
+                src="https://cdn-icons-png.flaticon.com/512/833/833472.png"
+                alt="Heart">
+
+        </section>
+
+        <!-- ============================= -->
+        <!-- Main Question -->
+        <!-- ============================= -->
+
+        <section class="questionSection">
+
+            <h2>
+
+                Dus...
+
+            </h2>
+
+            <h3>
+
+                Wil je mijn vriendin zijn?
+
+            </h3>
+
+        </section>
+
+        <!-- ============================= -->
+        <!-- Message Area -->
+        <!-- ============================= -->
+
+        <section>
+
+            <p id="message">
+
+                ❤️
+
+            </p>
+
+        </section>
+
+        <!-- ============================= -->
+        <!-- Buttons -->
+        <!-- ============================= -->
+
+        <section class="buttonSection">
+
+            <button id="yesButton">
+
+                ❤️ Ja ❤️
+
+            </button>
+
+            <button id="noButton">
+
+                Nee
+
+            </button>
+
+        </section>
+
+        <!-- ============================= -->
+        <!-- Hidden Messages -->
+        <!-- ============================= -->
+
+        <section class="extraMessages">
+
+            <p id="messageOne" class="hiddenMessage">
+
+                😊 Je laat me glimlachen.
+
+            </p>
+
+            <p id="messageTwo" class="hiddenMessage">
+
+                🌸 Je bent echt bijzonder.
+
+            </p>
+
+            <p id="messageThree" class="hiddenMessage">
+
+                💖 Wat er ook gebeurt, ik wens je het beste.
+
+            </p>
+
+        </section>
+
+        <!-- ============================= -->
+        <!-- Final Screen -->
+        <!-- ============================= -->
+
+        <section id="successScreen">
+
+            <div class="successContent">
+
+                <h1>
+
+                    🎉 Yay!! 🎉
+
+                </h1>
+
+                <h2>
+
+                    Bedankt voor je antwoord ❤️
+
+                </h2>
+
+                <p>
+
+                    Je hebt mijn dag gemaakt.
+
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ============================= -->
+    <!-- Confetti -->
+    <!-- ============================= -->
+
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- ============================= -->
+    <!-- Audio -->
+    <!-- ============================= -->
+
+    <audio
+        id="successSound"
+        preload="auto">
+
+        <source
+            src="success.mp3"
+            type="audio/mpeg">
+
+    </audio>
+
+    <!-- ============================= -->
+    <!-- JavaScript -->
+    <!-- ============================= -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>// ==========================================
+// LOVE QUESTION WEBSITE - SCRIPT.JS
+// FIXED VERSION
+// ==========================================
+
+
+// ELEMENTEN
+
+const lovePercent = document.getElementById("lovePercent");
+const meterFill = document.getElementById("meterFill");
+const meterText = document.getElementById("meterText");
+
+const yesButton = document.getElementById("yesButton");
+const noButton = document.getElementById("noButton");
+
+const successScreen = document.getElementById("successScreen");
+
+const heartContainer = document.getElementById("heartContainer");
+
+
+
+// ==========================================
+// LOVE METER
+// ==========================================
+
+
+let love = 0;
+let meterFinished = false;
+
+
+const meterInterval = setInterval(() => {
+
+
+    if(meterFinished) return;
+
+
+    love++;
+
+
+    if(love > 100){
+
+        love = 100;
+
+    }
+
+
+
+    if(lovePercent){
+
+        lovePercent.textContent =
+        love + "%";
+
+    }
+
+
+
+    if(meterFill){
+
+        meterFill.style.width =
+        love + "%";
+
+    }
+
+
+
+    if(meterText){
+
+
+        if(love < 25){
+
+            meterText.textContent =
+            "De liefde begint te groeien ❤️";
+
+        }
+
+
+        else if(love < 50){
+
+            meterText.textContent =
+            "Steeds meer liefde gevonden 💕";
+
+        }
+
+
+        else if(love < 75){
+
+            meterText.textContent =
+            "Wow, dit wordt serieus 🥰";
+
+        }
+
+
+        else if(love < 100){
+
+            meterText.textContent =
+            "Bijna maximaal ❤️";
+
+        }
+
+    }
+
+
+
+    if(love === 100){
+
+
+        meterFinished = true;
+
+
+        clearInterval(meterInterval);
+
+
+
+        if(meterText){
+
+            meterText.textContent =
+            "💥 Love Meter kapot! Te veel liefde 💖";
+
+        }
+
+
+
+        if(meterFill){
+
+            meterFill.classList.add(
+                "meterBroken"
+            );
+
+
+            setTimeout(()=>{
+
+                meterFill.classList.add(
+                    "broken"
+                );
+
+            },1000);
+
+        }
+
+    }
+
+
+},1000);
+
+
+
+
+// ==========================================
+// JA KNOP
+// ==========================================
+
+
+let heartsStarted = false;
+
+
+if(yesButton){
+
+
+yesButton.addEventListener("click",()=>{
+
+
+    if(successScreen){
+
+
+        successScreen.style.display =
+        "flex";
+
+
+        successScreen.classList.add(
+            "successAnimation"
+        );
+
+
+    }
+
+
+
+    if(!heartsStarted){
+
+        createHearts();
+
+        heartsStarted = true;
+
+    }
+
+
+
+    startConfetti();
+
+
+
+});
+
+
+}
+
+
+
+
+
+// ==========================================
+// NEE KNOP
+// ==========================================
+
+
+let noClicks = 0;
+
+
+if(noButton){
+
+
+noButton.addEventListener("click",()=>{
+
+
+    noClicks++;
+
+
+
+    let yesScale =
+    1 + (noClicks * 0.08);
+
+
+
+    let noScale =
+    1 - (noClicks * 0.05);
+
+
+
+    if(noScale < 0.6){
+
+        noScale = 0.6;
+
+    }
+
+
+
+    yesButton.style.transform =
+    `scale(${yesScale})`;
+
+
+
+    noButton.style.transform =
+    `scale(${noScale})`;
+
+
+
+});
+
+
+}
+
+
+
+
+
+// ==========================================
+// HARTJES
+// ==========================================
+
+
+function createHearts(){
+
+
+
+    setInterval(()=>{
+
+
+        if(!heartContainer) return;
+
+
+
+        const heart =
+        document.createElement("div");
+
+
+
+        heart.className =
+        "heart";
+
+
+
+        heart.textContent =
+        "❤️";
+
+
+
+        heart.style.left =
+        Math.random()*100 + "%";
+
+
+
+        heart.style.animationDuration =
+        (3 + Math.random()*3) + "s";
+
+
+
+        heartContainer.appendChild(
+            heart
+        );
+
+
+
+        setTimeout(()=>{
+
+
+            heart.remove();
+
+
+        },7000);
+
+
+
+    },500);
+
+
+
+}
+
+
+
+
+
+// ==========================================
+// CONFETTI
+// ==========================================
+
+
+function startConfetti(){
+
+
+
+    for(let i=0;i<80;i++){
+
+
+        const confetti =
+        document.createElement("div");
+
+
+
+        confetti.textContent =
+        "🎉";
+
+
+
+        confetti.style.position =
+        "fixed";
+
+
+
+        confetti.style.left =
+        Math.random()*100+"%";
+
+
+
+        confetti.style.top =
+        "-20px";
+
+
+
+        confetti.style.fontSize =
+        (15 + Math.random()*20)+"px";
+
+
+
+        confetti.style.zIndex =
+        "9999";
+
+
+
+        confetti.style.animation =
+        "fall 3s linear forwards";
+
+
+
+        document.body.appendChild(
+            confetti
+        );
+
+
+
+        setTimeout(()=>{
+
+
+            confetti.remove();
+
+
+        },3000);
+
+
+
+    }
+
+
+}
